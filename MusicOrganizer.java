@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * A class to hold details of audio tracks.
@@ -19,6 +20,8 @@ public class MusicOrganizer
     private TrackReader reader;
     // An array to hold for storing music tracks in a randomized sequence.
     private ArrayList<Track> randomTracks;
+    //Random Object
+    Random randomNumber = new Random();
 
 
 	
@@ -53,6 +56,16 @@ public class MusicOrganizer
     public void addTrack(Track track)
     {
         tracks.add(track);
+    }
+    
+    /**
+     * randomSong method generates a pseudorandom integer uses that as the index for the random track to be played.
+     */
+    public void randomSong()
+    {
+        int n = randomNumber.nextInt(4)+1;
+        playTrack(n);
+        
     }
     
     /**
