@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A class to hold details of audio tracks.
  * Individual tracks may be played.
  * 
  * @author David J. Barnes and Michael Kölling
+ * @Contributor Brian McKiernan
  * @version 2011.07.31
  */
 public class MusicOrganizer
@@ -15,6 +17,11 @@ public class MusicOrganizer
     private MusicPlayer player;
     // A reader that can read music files and load them as tracks.
     private TrackReader reader;
+    // An array to hold for storing music tracks in a randomized sequence.
+    private ArrayList<Track> randomTracks;
+
+
+	
 
     /**
      * Create a MusicOrganizer
@@ -24,6 +31,7 @@ public class MusicOrganizer
         tracks = new ArrayList<Track>();
         player = new MusicPlayer();
         reader = new TrackReader();
+        randomTracks = new ArrayList<Track>();
         readLibrary("audio");
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
@@ -59,6 +67,40 @@ public class MusicOrganizer
             System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
         }
     }
+    
+    private void generateRandom()
+    {
+		Track trackToAdd;
+        for(int i=0;i<tracks.size();i++)
+		{
+			trackToAdd = tracks.get(i);
+			randomTracks.add(trackToAdd);
+	    }
+		Collections.shuffle(randomTracks);
+    }
+    
+    /**
+     * This method prints out all the tracks in the randomTracks ArrayList which are in a random order because this method calls generateRandom();
+     */
+    public void randomPlaylist()
+    {
+		generateRandom();
+		System.out.println("Random playlist");
+		for(Track track : randomTracks)
+		{
+			System.out.print("Track Listing: ");
+        	System.out.print(track.getDetails());
+			System.out.println();
+    	}
+        int n;
+		for(Track track : randomTracks)
+		{
+			n = randomTracks.indexOf(track);
+			playTrack(n);
+		}
+		
+    }
+        
     
     /**
      * Return the number of tracks in the collection.
